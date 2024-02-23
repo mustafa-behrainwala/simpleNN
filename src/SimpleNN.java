@@ -133,10 +133,13 @@ public class SimpleNN {
     private static void testXOR() {
         System.out.println("Testing XOR");
 
-        double[][] train = {{.05,.9}, {.9,.9}, {.9,.05}, {.05,.05}};
+        double zero = .1;
+        double one = .9;
+
+        double[][] train = {{zero,one}, {one,one}, {one,zero}, {zero,zero}};
         int[] out = {1, 0, 1, 0};
 
-        double[][] test = {{.05, .05}, {.05, .9}, {.9, .05}, {.9, .9}};
+        double[][] test = {{zero, zero}, {zero, one}, {one, zero}, {one, one}};
 
         NetworkBuilder nb = new NetworkBuilder(2);
         nb.addConnectedLayer(4);

@@ -28,12 +28,14 @@ public class ConnectedLayer extends Layer{
             return forwardPass;
     }
 
+    double bias = 0.1;
+
     public double[] forwardPass(double[] input) {
         double[] output = new double[numberOuts];
 
         for(int rows=0; rows<numberInps; rows++) {
             for(int cols=0; cols<numberOuts; cols++) {
-                output[cols] += input[rows] * weights[rows][cols] + 0.1;
+                output[cols] += input[rows] * weights[rows][cols] +bias;
             }
         }
 
@@ -48,6 +50,8 @@ public class ConnectedLayer extends Layer{
         return output;
     }
 
+    double learningRate = 0.1;
+
     @Override
     public void backPropagate(double[] error){
         double [] backError = new double[numberInps];
@@ -59,7 +63,7 @@ public class ConnectedLayer extends Layer{
                 if(getPrevLayer() != null)
                     backError[rows] += error[cols] * dervRelU(prevOutput[cols]) * weights[rows][cols];
 
-                weights[rows][cols] = weights[rows][cols] - (cost*.1);
+                weights[rows][cols] = weights[rows][cols] - (cost*learningRate);
             }
         }
 
@@ -71,8 +75,9 @@ public class ConnectedLayer extends Layer{
         return x > 0 ? x : 0;
     }
 
+    double leak = 0.01;
     private double dervRelU(double x) {
-        return x > 0 ? 1 : .01;
+        return x > 0 ? 1 : leak;
     }
 
     private double sigmoid(double x) {
