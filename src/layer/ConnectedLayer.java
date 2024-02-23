@@ -17,13 +17,23 @@ public class ConnectedLayer extends Layer{
 
     private double[] prevInput;
     private double[] prevOutput;
+
     @Override
     public double[] getOutput(double[] input) {
+        double[] forwardPass = forwardPass(input);
+
+        if(getNextLayer() != null)
+            return getNextLayer().getOutput(forwardPass);
+        else
+            return forwardPass;
+    }
+
+    public double[] forwardPass(double[] input) {
         double[] output = new double[numberOuts];
 
         for(int rows=0; rows<numberInps; rows++) {
             for(int cols=0; cols<numberOuts; cols++) {
-                output[cols] += input[rows] * weights[rows][cols];
+                output[cols] += input[rows] * weights[rows][cols] + 0.1;
             }
         }
 
@@ -45,10 +55,16 @@ public class ConnectedLayer extends Layer{
         for(int rows=0; rows<numberInps; rows++) {
             for(int cols=0; cols<numberOuts; cols++) {
                 double cost = error[cols] * dervRelU(prevOutput[cols])*prevInput[rows];
+
+                if(getPrevLayer() != null)
+                    backError[rows] += error[cols] * dervRelU(prevOutput[cols]) * weights[rows][cols];
+
                 weights[rows][cols] = weights[rows][cols] - (cost*.1);
-                backError[rows] += error[cols] * dervRelU(prevOutput[cols]) * weights[rows][cols];
             }
         }
+
+        if(getPrevLayer() != null)
+            getPrevLayer().backPropagate(backError);
     }
 
     private double relU(double x) {
@@ -65,5 +81,10 @@ public class ConnectedLayer extends Layer{
 
     private double dervSigmoid(double x) {
         return x * (1 - x);
+    }
+
+    @Override
+    public int getNumberOutput() {
+        return numberOuts;
     }
 }
