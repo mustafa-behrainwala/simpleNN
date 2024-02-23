@@ -40,10 +40,13 @@ public class ConnectedLayer extends Layer{
 
     @Override
     public void backPropagate(double[] error){
+        double [] backError = new double[numberInps];
+
         for(int rows=0; rows<numberInps; rows++) {
             for(int cols=0; cols<numberOuts; cols++) {
                 double cost = error[cols] * dervRelU(prevOutput[cols])*prevInput[rows];
                 weights[rows][cols] = weights[rows][cols] - (cost*.1);
+                backError[rows] += error[cols] * dervRelU(prevOutput[cols]) * weights[rows][cols];
             }
         }
     }
@@ -58,5 +61,9 @@ public class ConnectedLayer extends Layer{
 
     private double sigmoid(double x) {
         return 1 / (1 + Math.exp(-x));
+    }
+
+    private double dervSigmoid(double x) {
+        return x * (1 - x);
     }
 }
