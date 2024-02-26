@@ -35,7 +35,7 @@ public class ConnectedLayer extends Layer{
 
         for(int rows=0; rows<numberInps; rows++) {
             for(int cols=0; cols<numberOuts; cols++) {
-                output[cols] += input[rows] * weights[rows][cols] +bias;
+                output[cols] += input[rows] * weights[rows][cols] + bias;
             }
         }
 

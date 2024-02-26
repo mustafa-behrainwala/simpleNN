@@ -149,7 +149,7 @@ public class SimpleNN {
         System.out.println("Before training");
         for (double[] doubles : test) System.out.println(nn.getOutput(doubles));
 
-        for(int epoch=0; epoch<10000; epoch++) {
+        for(int epoch=0; epoch<100000; epoch++) {
             for (int i = 0; i < train.length; i++) {
                 nn.train(train[i], out[i]);
             }
