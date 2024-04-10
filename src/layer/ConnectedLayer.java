@@ -12,7 +12,7 @@ public class ConnectedLayer extends Layer{
         this.numberInps = numberInps;
         this.numberOuts = numberOuts;
 
-        weights = MatrixUtils.initilizeWeights(numberInps, numberOuts);
+        weights = MatrixUtils.initializeWeights(numberInps, numberOuts);
     }
 
     private double[] prevInput;

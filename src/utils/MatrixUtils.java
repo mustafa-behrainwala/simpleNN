@@ -3,7 +3,7 @@ package utils;
 import java.util.Random;
 
 public class MatrixUtils {
-    public static double[][] initilizeWeights(int rows, int cols) {
+    public static double[][] initializeWeights(int rows, int cols) {
         double[][] weights = new double[rows][cols];
 
         Random r = new Random(123);
@@ -45,5 +45,42 @@ public class MatrixUtils {
         }
 
         return output;
+    }
+
+    public static double[][] vectorToMatrix(double[] input, int rows, int cols){
+
+
+        int i=0;
+
+        double[][] matrix = new double[rows][cols];
+
+        for(int r=0; r<rows; r++){
+            for(int c=0; c<cols; c++){
+                matrix[r][c] = input[i];
+                i++;
+            }
+        }
+
+        return matrix;
+    }
+
+    public static double[] matrixToVector(double[][] input){
+
+        int rows = input.length;
+        int columns = input[0].length;
+
+        double[] vector = new double[rows*columns];
+
+        int i=0;
+
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < columns; c++) {
+                vector[i] = input[r][c];
+                i++;
+            }
+        }
+
+
+        return vector;
     }
 }
