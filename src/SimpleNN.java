@@ -141,7 +141,7 @@ public class SimpleNN {
 
         double[][] test = {{zero, zero}, {zero, one}, {one, zero}, {one, one}};
 
-        NetworkBuilder nb = new NetworkBuilder(2);
+        NetworkBuilder nb = new NetworkBuilder(2, 1);
         nb.addConnectedLayer(4);
         nb.addConnectedLayer(2);
         NeuralNetwork nn = nb.build();

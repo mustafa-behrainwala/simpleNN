@@ -10,9 +10,11 @@ public class NetworkBuilder {
     private final List<Layer> layers = new ArrayList<>();
 
     private final int numInputs;
+    private final int scaleFactor;
 
-    public NetworkBuilder(int numInputs){
+    public NetworkBuilder(int numInputs, int scaleFactor){
         this.numInputs = numInputs;
+        this.scaleFactor = scaleFactor;
     }
 
     public void addConnectedLayer(int numOutputs){
@@ -24,6 +26,6 @@ public class NetworkBuilder {
     }
 
     public NeuralNetwork build(){
-        return new NeuralNetwork(layers);
+        return new NeuralNetwork(layers, scaleFactor);
     }
 }
