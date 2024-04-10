@@ -7,10 +7,10 @@ import utils.MatrixUtils;
 public class SimpleNN {
     public static void main(String[] args) {
         System.out.println("Simple NN training.");
-//
-//        SimpleNN.testOR();
-//        SimpleNN.testAdultORChild();
-//        SimpleNN.testAdultORChildGender();
+
+        SimpleNN.testOR();
+        SimpleNN.testAdultORChild();
+        SimpleNN.testAdultORChildGender();
         SimpleNN.testXOR();
     }
 
@@ -133,8 +133,8 @@ public class SimpleNN {
     private static void testXOR() {
         System.out.println("Testing XOR");
 
-        double zero = .1;
-        double one = .9;
+        double zero = 0;
+        double one = 1;
 
         double[][] train = {{zero,one}, {one,one}, {one,zero}, {zero,zero}};
         int[] out = {1, 0, 1, 0};

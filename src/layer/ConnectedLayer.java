@@ -31,23 +31,25 @@ public class ConnectedLayer extends Layer{
     double bias = 0.1;
 
     public double[] forwardPass(double[] input) {
-        double[] output = new double[numberOuts];
+        prevInput = input;
 
-        for(int rows=0; rows<numberInps; rows++) {
-            for(int cols=0; cols<numberOuts; cols++) {
-                output[cols] += input[rows] * weights[rows][cols] + bias;
+        double[] out = new double[numberOuts];
+        prevOutput = new double[numberOuts];
+
+
+        for(int rows = 0; rows < numberInps; rows++){
+            for(int cols = 0; cols < numberOuts; cols++){
+                prevOutput[cols] += input[rows]*weights[rows][cols];
             }
         }
 
-        prevInput = input;
-        prevOutput = new double[numberOuts];
 
-        for(int i=0; i<numberOuts; i++) {
-            prevOutput[i] = output[i];
-            output[i] = relU(output[i]);
+        for(int j = 0; j < numberOuts; j++){
+            out[j] = relU(prevOutput[j]);
         }
 
-        return output;
+
+        return out;
     }
 
     double learningRate = 0.1;
