@@ -21,36 +21,10 @@ public class OCR {
         System.out.println("***Train Data Loaded***");
         System.out.println("Images in train data: "+imagesTrain.size());
 
-
-        System.out.println("\n\n***Creating NN***");
-        NetworkBuilder networkBuilder = new NetworkBuilder(28*28, 256);
-        networkBuilder.addConnectedLayer(700);
-        networkBuilder.addConnectedLayer(10);
-        NeuralNetwork nn = networkBuilder.build();
-
-        int countCorrect=0;
-        for(Image image: imagesTest){
-            int ans = nn.getOutput(MatrixUtils.matrixToVector(image.data()));
-            if(ans == image.label()){
-                countCorrect++;
-            }
-        }
-        System.out.println("\n\n***Accuracy*** -> "+(countCorrect*100.0/imagesTest.size())+"%");
-
-        for(int epoch=0; epoch<3; epoch++) {
-            Collections.shuffle(imagesTrain);
-            for (Image image : imagesTrain) {
-                nn.train(MatrixUtils.matrixToVector(image.data()), image.label());
-            }
-
-            countCorrect=0;
-            for(Image image: imagesTest){
-                int ans = nn.getOutput(MatrixUtils.matrixToVector(image.data()));
-                if(ans == image.label()){
-                    countCorrect++;
-                }
-            }
-            System.out.println("\n\n***Accuracy after epoch "+epoch+"*** -> "+(countCorrect*100.0/imagesTest.size())+"%");
-        }
+        int testImg=3;
+        System.out.println("\n\n***Image***\n\n"+imagesTest.get(testImg)+"\n\n");
+        MaxPoolLayer player = new MaxPoolLayer(1, 2, 28, 28);
+        player.getOutput(MatrixUtils.matrixToVector(imagesTest.get(testImg).data()));
+        System.out.println("\n\n***MaxPoolLayer***\n\n"+player+"\n\n");
     }
 }

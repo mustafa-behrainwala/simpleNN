@@ -7,9 +7,9 @@ import java.util.List;
 
 public class NeuralNetwork {
     private final List<Layer> layers;
-    private final int scaleFactor;
+    private final double scaleFactor;
 
-    public NeuralNetwork(List<Layer> layers, int scaleFactor) {
+    public NeuralNetwork(List<Layer> layers, double scaleFactor) {
         this.layers = layers;
         this.scaleFactor = scaleFactor;
         linkLayers();
@@ -28,12 +28,11 @@ public class NeuralNetwork {
     }
 
     public int getOutput(double[] input) {
-
         return MatrixUtils.getMaxIndex(layers.get(0).getOutput(MatrixUtils.multiplyScalar(input, 1/scaleFactor)));
     }
 
     public void train(double[] train, int ans) {
-        double[] output = layers.get(0).getOutput((MatrixUtils.multiplyScalar(train, 1/scaleFactor)));
+        double[] output = layers.get(0).getOutput(MatrixUtils.multiplyScalar(train, 1/scaleFactor));
         double[] correctResp = new double[output.length];
         correctResp[ans] = -1;
         double[] error = MatrixUtils.addArrays(output, correctResp);
