@@ -43,12 +43,41 @@ public class MaxPoolLayer extends Layer{
     private double[][] pool(double[][] input){
         double[][] output = new double[getOutputRows()][getOutputCols()];
 
+        for(int r = 0; r < getOutputRows(); r+= _stepSize) {
+            for (int c = 0; c < getOutputCols(); c += _stepSize) {
+                double max = 0.0;
+                int maxx = 0;
+                int maxy = 0;
+
+                for(int x = 0; x < _windowSize; x++) {
+                    for (int y = 0; y < _windowSize; y++) {
+                        if(max < input[r+x][c+y]){
+                            max=input[r+x][c+y];
+                            maxx = r+x;
+                            maxy = c+y;
+                        }
+                    }
+                }
+
+                if(maxx > getOutputRows()-_stepSize)
+                    maxx = getOutputRows()-_stepSize;
+                if(maxy > getOutputCols()-_stepSize)
+                    maxy = getOutputCols()-_stepSize;
+
+                output[maxx][maxy] = max;
+            }
+        }
+
         return output;
     }
 
-    public int getOutputRows() {return 1;}
+    public int getOutputRows() {return (_inRows-_windowSize)/_stepSize+1;}
 
-    public int getOutputCols() {return 1;}
+    public int getOutputCols() {return (_inCols-_windowSize)/_stepSize+1;}
+
+    private static final char FULL_BLOCK= '\u2588';
+    private static final char LIGHT_SHADE= '\u2591';
+    private static final char MEDIUM_SHADE= '\u2592';
 
     public String toString(){
         if(output == null)
@@ -59,10 +88,15 @@ public class MaxPoolLayer extends Layer{
         for(int i=0; i<getOutputRows(); i++) {
             for (int j = 0; j < getOutputCols(); j++) {
                 if(output[i*getOutputRows()+j] != 0) {
-                    sb.append(output[i * getOutputRows() + j]).append(", ");
+                    if(output[i * getOutputRows() + j] > 196)
+                        sb.append(FULL_BLOCK);
+                    else if (output[i * getOutputRows() + j] > 100)
+                        sb.append(MEDIUM_SHADE);
+                    else
+                        sb.append(LIGHT_SHADE);
                 }
                 else
-                    sb.append("     "); //only print the rows which are not zero
+                    sb.append(" "); //only print the rows which are not zero
             }
                 sb.append("\n");
         }

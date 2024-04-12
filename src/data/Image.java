@@ -33,7 +33,7 @@ public record Image(double[][] data, int label) {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
-        sb.append(label);
+        sb.append("label->"+label);
         sb.append("\n");
 
         for (double[] datum : data) {
