@@ -26,6 +26,10 @@ public record Image(double[][] data, int label) {
         return target;
     }
 
+    private static final char FULL_BLOCK= '\u2588';
+    private static final char LIGHT_SHADE= '\u2591';
+    private static final char MEDIUM_SHADE= '\u2592';
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
@@ -35,10 +39,14 @@ public record Image(double[][] data, int label) {
         for (double[] datum : data) {
             for (int j = 0; j < data[0].length; j++) {
                 if (datum[j] != 0) {
-                    sb.append(datum[j]);
-                    sb.append(", ");
+                    if(datum[j] > 196)
+                        sb.append(FULL_BLOCK);
+                    else if(datum[j] > 100)
+                        sb.append(MEDIUM_SHADE);
+                    else
+                        sb.append(LIGHT_SHADE);
                 } else
-                    sb.append("    ");
+                    sb.append(" ");
             }
             sb.append("\n");
         }
