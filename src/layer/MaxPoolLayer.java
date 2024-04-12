@@ -2,8 +2,6 @@ package layer;
 
 import utils.MatrixUtils;
 
-import java.util.List;
-
 public class MaxPoolLayer extends Layer{
     private int _stepSize;
     private int _windowSize;
